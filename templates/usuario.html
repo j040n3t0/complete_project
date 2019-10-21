@@ -1,0 +1,235 @@
+<?php
+  $login_cookie = $_COOKIE['login'];
+    if(isset($login_cookie)){
+echo '
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Lambda - Free Bootstrap 4 Multipurpose Landing Page Template</title>
+        <meta name="description" content="Lambda is a beautiful Bootstrap 4 template for multipurpose landing pages." /> 
+
+        <!--Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+        <!--vendors styles-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+
+        <!-- Bootstrap CSS / Color Scheme -->
+        <link rel="stylesheet" href="css/default.css" id="theme-color">
+    </head>
+    <body data-spy="scroll" data-target="#lambda-navbar" data-offset="0">
+
+        <!--navigation-->
+        <nav class="navbar navbar-expand-md navbar-dark navbar-transparent fixed-top sticky-navigation" id="lambda-navbar">
+            <a class="navbar-brand" href="index.html">
+                Brasil Financeira
+            </a>
+            <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" 
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span data-feather="menu"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="index.html">Home</a>
+                </ul>
+                <form class="form-inline">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="index.html?#signup" class="btn btn-outline-secondary btn-navbar page-scroll">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#cadastro" class="btn btn-outline-secondary btn-navbar page-scroll">Cadastro</a>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
+
+        <!--hero header-->
+        <section class="py-5 py-md-6 bg-hero inverse" id="cadastro" style="background-image: url(static/img/parallex.jpg)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 my-md-auto text-center text-md-left pb-5 pb-md-0">
+                        <h1 class="display-3 text-white">Bem-Vindo, $login_cookie</h1>
+                        <p class="lead text-light">Essas informações <font color="red">PODEM</font> ser acessadas por você.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!--footer / contact-->
+        <footer class="py-6 bg-black" id="contact">
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col-12 text-muted text-center small-xl">
+                        <p>&copy; 2019 Lambda. All rights reserved.</p>
+                        Free Bootstrap 4 Multipurpose Landing Page Template by <a href="https://wireddots.com" target="_blank">Wired Dots</a>.
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!--scroll to top-->
+        <div class="scroll-top">
+            <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </div>
+
+        <!-- theme switcher (FOR DEMO ONLY - REMOVE FROM PRODUCTION)-->
+        <div class="switcher-wrap">
+            <div class="switcher-trigger">
+                <span class="fa fa-gear"></span>
+            </div>
+            <div class="color-switcher">
+                <h6>Color Switcher</h6>
+                <ul class="mt-3 clearfix">
+                    <li class="bg-green active" data-color="default" title="Default Green"></li>
+                    <li class="bg-purple" data-color="purple" title="Purple"></li>
+                    <li class="bg-blue" data-color="blue" title="Blue"></li>
+                    <li class="bg-red" data-color="red" title="Red"></li>
+                    <li class="bg-orange" data-color="orange" title="Orange"></li>
+                    <li class="bg-indigo" data-color="indigo" title="Indigo"></li>
+                    <li class="bg-black" data-color="black" title="Black"></li>
+                    <li class="bg-teal" data-color="teal" title="Teal"></li>
+                    <li class="bg-cyan" data-color="cyan" title="Cyan"></li>
+                    <li class="bg-pink" data-color="pink" title="Pink"></li>
+                </ul>
+                <p>These are just demo colors. You can <b>easily</b> create your own color scheme.</p>
+            </div>
+            <div class="mt-4">
+                <a href="https://wireddots.com/themes/lambda?utm_source=lambda-demos" class="btn btn-primary btn-block">Free Download</a>
+            </div>
+        </div>
+
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.7.0/feather.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
+'
+    }else{
+echo'
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Lambda - Free Bootstrap 4 Multipurpose Landing Page Template</title>
+        <meta name="description" content="Lambda is a beautiful Bootstrap 4 template for multipurpose landing pages." /> 
+
+        <!--Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+        <!--vendors styles-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+
+        <!-- Bootstrap CSS / Color Scheme -->
+        <link rel="stylesheet" href="css/default.css" id="theme-color">
+    </head>
+    <body data-spy="scroll" data-target="#lambda-navbar" data-offset="0">
+
+        <!--navigation-->
+        <nav class="navbar navbar-expand-md navbar-dark navbar-transparent fixed-top sticky-navigation" id="lambda-navbar">
+            <a class="navbar-brand" href="index.html">
+                Brasil Financeira
+            </a>
+            <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" 
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span data-feather="menu"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="index.html">Home</a>
+                </ul>
+                <form class="form-inline">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="index.html?#signup" class="btn btn-outline-secondary btn-navbar page-scroll">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#cadastro" class="btn btn-outline-secondary btn-navbar page-scroll">Cadastro</a>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
+
+        <!--hero header-->
+        <section class="py-5 py-md-6 bg-hero inverse" id="cadastro" style="background-image: url(static/img/parallex.jpg)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 my-md-auto text-center text-md-left pb-5 pb-md-0">
+                        <h1 class="display-3 text-white">Bem-Vindo, Convidado!</h1>
+                        <p class="lead text-light">Essas informações <font color="red">NÃO PODEM</font> ser acessadas por você.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!--footer / contact-->
+        <footer class="py-6 bg-black" id="contact">
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col-12 text-muted text-center small-xl">
+                        <p>&copy; 2019 Lambda. All rights reserved.</p>
+                        Free Bootstrap 4 Multipurpose Landing Page Template by <a href="https://wireddots.com" target="_blank">Wired Dots</a>.
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!--scroll to top-->
+        <div class="scroll-top">
+            <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </div>
+
+        <!-- theme switcher (FOR DEMO ONLY - REMOVE FROM PRODUCTION)-->
+        <div class="switcher-wrap">
+            <div class="switcher-trigger">
+                <span class="fa fa-gear"></span>
+            </div>
+            <div class="color-switcher">
+                <h6>Color Switcher</h6>
+                <ul class="mt-3 clearfix">
+                    <li class="bg-green active" data-color="default" title="Default Green"></li>
+                    <li class="bg-purple" data-color="purple" title="Purple"></li>
+                    <li class="bg-blue" data-color="blue" title="Blue"></li>
+                    <li class="bg-red" data-color="red" title="Red"></li>
+                    <li class="bg-orange" data-color="orange" title="Orange"></li>
+                    <li class="bg-indigo" data-color="indigo" title="Indigo"></li>
+                    <li class="bg-black" data-color="black" title="Black"></li>
+                    <li class="bg-teal" data-color="teal" title="Teal"></li>
+                    <li class="bg-cyan" data-color="cyan" title="Cyan"></li>
+                    <li class="bg-pink" data-color="pink" title="Pink"></li>
+                </ul>
+                <p>These are just demo colors. You can <b>easily</b> create your own color scheme.</p>
+            </div>
+            <div class="mt-4">
+                <a href="https://wireddots.com/themes/lambda?utm_source=lambda-demos" class="btn btn-primary btn-block">Free Download</a>
+            </div>
+        </div>
+
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.7.0/feather.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
+'
+?>
