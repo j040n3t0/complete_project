@@ -59,11 +59,26 @@
                         <div class="card">
                             <div class="card-body p-4">
                                 <form  method="POST" action="cadastro" id="enviar">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <input type="hidden" class="form-control" id="ipElk" value="10.0.1.69">
+                                    </div> -->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="nome" placeholder="Nome" >
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="usuario" placeholder="Usuário" >
+                                        <input type="text" class="form-control" id="sobrenome" placeholder="Sobrenome" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="cpf" placeholder="CPF" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="email" placeholder="E-mail" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="sexo" placeholder="Sexo" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="dtNasc" placeholder="Data Nascimento" >
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control" id="senha" placeholder="Senha" >
@@ -130,8 +145,13 @@
                 $('#enviar').on('submit', function(event) {
                     $.ajax({
                         data : {
-                            ipElk : $('#ipElk').val(),
-                            usuario : $('#usuario').val(),
+                            // ipElk : $('#ipElk').val(),
+                            nome : $('#nome').val(),
+                            sobrenome : $('#sobrenome').val(),
+                            cpf : $('#cpf').val(),
+                            email : $('#email').val(),
+                            sexo : $('#sexo').val(),
+                            dtNasc : $('#dtNasc').val(),
                             senha: $('#senha').val(),
                         },
                         type : 'POST',
@@ -144,8 +164,8 @@
                 });
             });
             $("#sendCadastro").click(function() {
-            if($("#usuario").val() == "" || $("#senha").val() ==""){
-                alert('<< INFORME NOME E SOBRENOME >>');
+            if($("#cpf").val() == "" || $("#senha").val() ==""){
+                alert('<< INFORME CPF E SENHA >>');
                 return false;
             }
             });

@@ -177,14 +177,14 @@
                             <div class="card-body p-4">
                                 <form method="POST" id="login">
                                 <!-- <form method="POST" action="login" id="login"> -->
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <input type="hidden" class="form-control" id="ipElk" value="10.0.1.69">
+                                    </div> -->
+                                    <div class="form-group" id="divLogin">
+                                        <input type="text" class="form-control" id="cpf" placeholder="CPF" >
                                     </div>
-                                    <div class="form-group" id="divUser">
-                                        <input type="text" class="form-control" id="usuario" placeholder="Usuário">
-                                    </div>
-                                    <div class="form-group" id="divPass">
-                                        <input type="password" class="form-control" id="senha" placeholder="Senha">
+                                    <div class="form-group" id="divSenha">
+                                        <input type="password" class="form-control" id="senha" placeholder="Senha" >
                                     </div>
                                     <div class="form-group" id="insertOutput"></div>
                                     <div class="form-group" id="doLogin">
@@ -255,8 +255,8 @@
                 $('#login').on('submit', function(event) {
                     $.ajax({
                         data : {
-                            ipElk : $('#ipElk').val(),
-                            usuario : $('#usuario').val(),
+                            // ipElk : $('#ipElk').val(),
+                            cpf : $('#cpf').val(),
                             senha: $('#senha').val(),
                         },
                         type : 'POST',
@@ -276,23 +276,36 @@
 
                             var search_return = data.output;
                             var search_return = search_return.split(" ");
-                            var id = search_return[1]
-                            var nome = search_return[4]
-                            var sobrenome = search_return[7]
-                            var fullname = "Login sucesso: " + nome + " " + sobrenome + "."
+                            console.log(search_return);
+                            var id = search_return[1];
+                            var nome = search_return[4];
+                            var sobrenome = search_return[7];
+                            var cpf = search_return[10];
+                            var email = search_return[13];
+                            var sexo = search_return[16];
+                            var dtNasc = search_return[19];
+                            var senha = search_return[22];
+                            var fullname = "Login sucesso: " + nome + " " + sobrenome + ".";
                             //html = '<button class="btn btn-primary btn-block" id="goLogin">GO YOUR HOME</button>'
                             html = `
                             <div class="form-group"><input type='hidden' class="form-control" id='id_user' value='`+id+`' disabled></input></div>
                             <div class="form-group"><input type='text' class="form-control" id='nome_user' value='`+nome+`'></input></div>
                             <div class="form-group"><input type='text' class="form-control" id='sobrenome_user' value='`+sobrenome+`'></input></div>
+                            <div class="form-group"><input type='text' class="form-control" id='cpf_user' value='`+cpf+`'></input></div>
+                            <div class="form-group"><input type='text' class="form-control" id='email_user' value='`+email+`'></input></div>
+                            <div class="form-group"><input type='text' class="form-control" id='sexo_user' value='`+sexo+`'></input></div>
+                            <div class="form-group"><input type='text' class="form-control" id='dtNasc_user' value='`+dtNasc+`'></input></div>
+                            <div class="form-group"><input type='text' class="form-control" id='senha_user' value='`+senha+`'></input></div>
+                            <div id="updateReturn"></div>
+                            <div id="deleteReturn"></div>
                             `;
                             
                             $('#insertOutput').append(html).show();
                             $('#divAtualizar').append("<button type='submit' class='btn btn-primary btn-block' id='update'>Atualizar</button>").show();
                             $('#divDelete').append("<button type='submit' class='btn btn-primary btn-block' id='delete'>Deletar</button>").show();
                             document.getElementById("doLogin").innerHTML = ""; 
-                            document.getElementById("divUser").innerHTML = "";
-                            document.getElementById("divPass").innerHTML = "";
+                            document.getElementById("divLogin").innerHTML = "";
+                            document.getElementById("divSenha").innerHTML = "";
                         }
                     });
                     event.preventDefault();
@@ -303,18 +316,25 @@
               $('#atualizar').on('submit', function(event) {
                 $.ajax({
                   data : {
-                    ElkIP : $('#ipElk').val(),
+                    // ElkIP : $('#ipElk').val(),
                     id_user : $('#id_user').val(),
                     nome_user : $('#nome_user').val(),
-                    sobrenome_user: $('#sobrenome_user').val(),
+                    sobrenome_user : $('#sobrenome_user').val(),
+                    cpf_user : $('#cpf_user').val(),
+                    email_user : $('#email_user').val(),
+                    sexo_user : $('#sexo_user').val(),
+                    dtNasc_user : $('#dtNasc_user').val(),
+                    senha_user: $('#senha_user').val(),
                   },
                 type : 'POST',
                 url : '/update'
                 })
                 .done(function(data) {
-                   $('#insertOutput').append('<font color="red">'+data.output+'</font>').show();  
-                    document.getElementById("divUser").innerHTML = "";
-                    document.getElementById("divPass").innerHTML = "";
+                    document.getElementById("updateReturn").innerHTML = "";
+                    document.getElementById("deleteReturn").innerHTML = "";
+                    $('#updateReturn').append('<font color="red">'+data.output+'</font></div>').show();  
+                    document.getElementById("divLogin").innerHTML = "";
+                    document.getElementById("divSenha").innerHTML = "";
                 });
                 event.preventDefault();
               });
@@ -324,19 +344,29 @@
               $('#deletar').on('submit', function(event) {
                 $.ajax({
                   data : {
-                    ElkIP : $('#ipElk').val(),
+                    // ElkIP : $('#ipElk').val(),
                     id_user : $('#id_user').val(),
                     nome_user : $('#nome_user').val(),
-                    sobrenome_user: $('#sobrenome_user').val(),
+                    sobrenome_user : $('#sobrenome_user').val(),
+                    cpf_user : $('#cpf_user').val(),
+                    email_user : $('#email_user').val(),
+                    sexo_user : $('#sexo_user').val(),
+                    dtNasc_user : $('#dtNasc_user').val(),
+                    senha_user: $('#senha_user').val(),
                   },
                 type : 'POST',
                 url : '/delete'
                 })
                 .done(function(data) {
                     console.log(data.output);
-                    $('#insertOutput').append('<font color="red">'+data.output+'</font>').show();  
-                    document.getElementById("divUser").innerHTML = "";
-                    document.getElementById("divPass").innerHTML = "";
+                    document.getElementById("updateReturn").innerHTML = "";
+                    document.getElementById("deleteReturn").innerHTML = "";
+                    $('#deleteReturn').append('<font color="red">'+data.output+'<p>Atualizando em 3 segundos.</font>').show();  
+                    document.getElementById("divLogin").innerHTML = "";
+                    document.getElementById("divSenha").innerHTML = "";
+                    setTimeout(function(){ 
+                        location.reload(); 
+                    }, 3000);
                 });
                 event.preventDefault();
               });

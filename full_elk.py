@@ -7,15 +7,21 @@ from datetime import datetime
 from elasticsearch import Elasticsearch
 
 app = Flask(__name__)
+es = Elasticsearch(['10.0.1.69'])
 
 ###### FUNCOES ######
-def elastic_insert(nome,sobrenome,ElkIP):
+def elastic_insert(nome,sobrenome,cpf,email,sexo,dtNasc,senha):
 
-	es = Elasticsearch([ElkIP])
+	#es = Elasticsearch([ElkIP])
 
 	doc = {
-	    'nome': nome ,
+	    'nome': nome,
 	    'sobrenome': sobrenome,
+	    'cpf': cpf,
+	    'email': email,
+	    'sexo': sexo,
+	    'dtNasc': dtNasc,
+	    'senha': senha,
 	}
 
 	res = es.index(index="usuarios", body=doc)
@@ -26,24 +32,24 @@ def elastic_insert(nome,sobrenome,ElkIP):
 
 	es.indices.refresh(index="usuarios")
 
-def elastic_search(nome,sobrenome,ElkIP):
-	es = Elasticsearch([ElkIP])
+def elastic_search(cpf,senha):
+	#es = Elasticsearch([ElkIP])
 
 	doc = {
-	    'nome': nome ,
-	    'sobrenome': sobrenome,
+	    'cpf': cpf ,
+	    'senha': senha,
 	}
 
 	#print "\n\n" + str(doc) + "\n\n"
-	sobrenome = str(doc['sobrenome'])
-	nome = str(doc['nome'])
+	senha = str(doc['senha'])
+	cpf = str(doc['cpf'])
 	#print sobrenome
 	#print nome
-	if nome == "all" or sobrenome == "all":
-		res = es.search(index="usuarios", body={"query": {"match_all": {}}})
+	#if cpf == "all" or senha == "all":
+		#res = es.search(index="usuarios", body={"query": {"match_all": {}}})
 		#res = es.search(index="usuarios", body={"query": {"query_string": { "query": "nome: %s AND sobrenome: %s" % (nome,sobrenome)}}})
-	else:
-		res = es.search(index="usuarios", body={"query": {"query_string": { "query": "nome: %s AND sobrenome: %s" % (nome,sobrenome)}}})
+	#else:
+	res = es.search(index="usuarios", body={"query": {"query_string": { "query": "cpf: %s AND senha: %s" % (cpf,senha)}}})
 	#	res = es.search(index="usuarios", body={"query": {"match_all": {}}})
 	#print "\n\n" + str(res) + "\n\n" 
 	print("Got %d Hits:" % res['hits']['total']['value'])
@@ -51,30 +57,54 @@ def elastic_search(nome,sobrenome,ElkIP):
 	for hit in res['hits']['hits']:
 		print hit
 		#print "ID: %s " % hit["_id"]
-		print("ID: %s | Nome: %s e Sobrenome: %s" % (hit["_id"], hit["_source"]["nome"],hit["_source"]["sobrenome"]))
-		result_list.append("ID: %s | Nome: %s e Sobrenome: %s" % (hit["_id"], hit["_source"]["nome"],hit["_source"]["sobrenome"]))
+		print("ID: %s | Nome: %s | Sobrenome: %s | Cpf: %s | Email: %s | Sexo: %s | dtNasc: %s | Senha: %s " % \
+			(hit["_id"], hit["_source"]["nome"],\
+				hit["_source"]["sobrenome"],\
+				hit["_source"]["cpf"],\
+				hit["_source"]["email"],\
+				hit["_source"]["sexo"],\
+				hit["_source"]["dtNasc"],\
+				hit["_source"]["senha"]))
+		result_list.append("ID: %s | Nome: %s | Sobrenome: %s | Cpf: %s | Email: %s | Sexo: %s | dtNasc: %s | Senha: %s " % \
+			(hit["_id"], hit["_source"]["nome"],\
+				hit["_source"]["sobrenome"],\
+				hit["_source"]["cpf"],\
+				hit["_source"]["email"],\
+				hit["_source"]["sexo"],\
+				hit["_source"]["dtNasc"],\
+				hit["_source"]["senha"]))
 	return result_list
 
-def elastic_update(id,nome,sobrenome,ElkIP):
-	es = Elasticsearch([ElkIP])
+def elastic_update(id,nome,sobrenome,cpf,email,sexo,dtNasc,senha):
+	#es = Elasticsearch([ElkIP])
 	#es = Elasticsearch(['10.0.1.69'])
 
 	doc = {
-	    'nome': nome ,
+	    'nome': nome,
 	    'sobrenome': sobrenome,
+	    'cpf': cpf,
+	    'email': email,
+	    'sexo': sexo,
+	    'dtNasc': dtNasc,
+	    'senha': senha,
 	}
 
 	res = es.index(index="usuarios", id=id, body=doc)
 	print(res['result'])
 
-def elastic_delete(id,nome,sobrenome,ElkIP):
-	es = Elasticsearch([ElkIP])
+def elastic_delete(id,nome,sobrenome,cpf,email,sexo,dtNasc,senha):
+	#es = Elasticsearch([ElkIP])
 	#es = Elasticsearch(['10.0.1.69'])
 
-	doc = {
-	    'nome': nome ,
-	    'sobrenome': sobrenome,
-	}
+	# doc = {
+	#     'nome': nome,
+	#     'sobrenome': sobrenome,
+	#     'cpf': cpf,
+	#     'email': email,
+	#     'sexo': sexo,
+	#     'dtNasc': dtNasc,
+	#     'senha': senha,
+	# }
 
 	res = es.delete(index="usuarios", id=id)
 	print(res['result'])
@@ -99,13 +129,18 @@ def cadastro():
 
 @app.route('/cadastro',methods= ['POST'])
 def create_cadastro():
-	ipElk = request.form['ipElk']
-	usuario = request.form['usuario']
+	# ipElk = request.form['ipElk']
+	nome = request.form['nome']
+	sobrenome = request.form['sobrenome']
+	cpf = request.form['cpf']
+	email = request.form['email']
+	sexo = request.form['sexo']
+	dtNasc = request.form['dtNasc']
 	senha = request.form['senha']
-	elastic_insert(usuario,senha,ipElk)
+	elastic_insert(nome,sobrenome,cpf,email,sexo,dtNasc,senha)
 	#print request.form
 	#print "\n\nBateu aqui!"
-	return jsonify({'output' : 'Usuario '+request.form['usuario']+' cadastrado!!'})
+	return jsonify({'output' : 'Usuario '+request.form['nome']+' cadastrado!!'})
 
 @app.route('/login.html')
 def login():
@@ -120,10 +155,10 @@ def login():
 
 @app.route('/login',methods= ['POST'])
 def login_user():
-	ipElk = request.form['ipElk']
-	usuario = request.form['usuario']
+	# ipElk = request.form['ipElk']
+	cpf = request.form['cpf']
 	senha = request.form['senha']
-	search_result = elastic_search(usuario,senha,ipElk)
+	search_result = elastic_search(cpf,senha)
 	#print request.form
 	output = search_result
 
@@ -139,22 +174,34 @@ def login_user():
 @app.route('/update',methods= ['POST'])
 def update():
 	#print request.form
-	ElkIP = request.form['ElkIP']
+	#ElkIP = request.form['ElkIP']
 	id_user = request.form['id_user']
 	nome_user = request.form['nome_user']
 	sobrenome_user = request.form['sobrenome_user']
-	elastic_update(id_user,nome_user,sobrenome_user,ElkIP)
+	cpf_user = request.form['cpf_user']
+	email_user = request.form['email_user']
+	sexo_user = request.form['sexo_user']
+	dtNasc_user = request.form['dtNasc_user']
+	senha_user = request.form['senha_user']
+	#elastic_update(id_user,nome_user,sobrenome_user,ElkIP)
+	elastic_update(id_user,nome_user,sobrenome_user,cpf_user,email_user,sexo_user,dtNasc_user,senha_user)
 	return jsonify({'output' : 'Valor atualizado!'})
 
 @app.route('/delete',methods= ['POST'])
 def delete():
 	#print "\n\nChamou o DELETE\n\n"
 	#print request.form
-	ElkIP = request.form['ElkIP']
+	#ElkIP = request.form['ElkIP']
 	id_user = request.form['id_user']
 	nome_user = request.form['nome_user']
 	sobrenome_user = request.form['sobrenome_user']
-	elastic_delete(id_user,nome_user,sobrenome_user,ElkIP)
+	cpf_user = request.form['cpf_user']
+	email_user = request.form['email_user']
+	sexo_user = request.form['sexo_user']
+	dtNasc_user = request.form['dtNasc_user']
+	senha_user = request.form['senha_user']
+	#elastic_delete(id_user,nome_user,sobrenome_user,ElkIP)
+	elastic_delete(id_user,nome_user,sobrenome_user,cpf_user,email_user,sexo_user,dtNasc_user,senha_user)
 	return jsonify({'output' : 'Valor removido!'})
 
 if __name__ == "__main__":
