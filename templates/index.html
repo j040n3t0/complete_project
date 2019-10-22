@@ -175,20 +175,29 @@
                     <div class="col-md-5 ml-auto">
                         <div class="card">
                             <div class="card-body p-4">
-                                <form method="POST" action="login" id="login">
+                                <form method="POST" id="login">
+                                <!-- <form method="POST" action="login" id="login"> -->
                                     <div class="form-group">
                                         <input type="hidden" class="form-control" id="ipElk" value="10.0.1.69">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" id="divUser">
                                         <input type="text" class="form-control" id="usuario" placeholder="Usuário">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" id="divPass">
                                         <input type="password" class="form-control" id="senha" placeholder="Senha">
                                     </div>
                                     <div class="form-group" id="insertOutput"></div>
-                                    <div class="form-group">
+                                    <div class="form-group" id="doLogin">
                                         <button class="btn btn-primary btn-block" id="sendLogin">Login</button>
                                     </div>
+                                </form>
+                                <form method="POST" id="atualizar">
+                                        <div class="form-group" id="divAtualizar">
+                                        </div>
+                                </form>
+                                <form method="POST" id="deletar">
+                                        <div class="form-group" id="divDelete">
+                                        </div>
                                 </form>
                             </div>
                         </div>
@@ -266,18 +275,106 @@
                         else {
 
                             var search_return = data.output;
-                            //$('#searchOutput').append("<h3>"+search_return+"</h3>").show();
                             var search_return = search_return.split(" ");
                             var id = search_return[1]
                             var nome = search_return[4]
                             var sobrenome = search_return[7]
                             var fullname = "Login sucesso: " + nome + " " + sobrenome + "."
-                            $('#insertOutput').append(fullname).show();   
-                                                     
+                            //html = '<button class="btn btn-primary btn-block" id="goLogin">GO YOUR HOME</button>'
+                            html = `
+                            <div class="form-group"><input type='hidden' class="form-control" id='id_user' value='`+id+`' disabled></input></div>
+                            <div class="form-group"><input type='text' class="form-control" id='nome_user' value='`+nome+`'></input></div>
+                            <div class="form-group"><input type='text' class="form-control" id='sobrenome_user' value='`+sobrenome+`'></input></div>
+                            `;
+                            
+                            $('#insertOutput').append(html).show();
+                            $('#divAtualizar').append("<button type='submit' class='btn btn-primary btn-block' id='update'>Atualizar</button>").show();
+                            $('#divDelete').append("<button type='submit' class='btn btn-primary btn-block' id='delete'>Deletar</button>").show();
+                            document.getElementById("doLogin").innerHTML = ""; 
+                            document.getElementById("divUser").innerHTML = "";
+                            document.getElementById("divPass").innerHTML = "";
                         }
                     });
                     event.preventDefault();
                 });
+            });
+
+            $('form#atualizar').ready(function() {
+              $('#atualizar').on('submit', function(event) {
+                $.ajax({
+                  data : {
+                    ElkIP : $('#ipElk').val(),
+                    id_user : $('#id_user').val(),
+                    nome_user : $('#nome_user').val(),
+                    sobrenome_user: $('#sobrenome_user').val(),
+                  },
+                type : 'POST',
+                url : '/update'
+                })
+                .done(function(data) {
+                   $('#insertOutput').append('<font color="red">'+data.output+'</font>').show();  
+                    document.getElementById("divUser").innerHTML = "";
+                    document.getElementById("divPass").innerHTML = "";
+                });
+                event.preventDefault();
+              });
+            });
+
+            $('form#deletar').ready(function() {
+              $('#deletar').on('submit', function(event) {
+                $.ajax({
+                  data : {
+                    ElkIP : $('#ipElk').val(),
+                    id_user : $('#id_user').val(),
+                    nome_user : $('#nome_user').val(),
+                    sobrenome_user: $('#sobrenome_user').val(),
+                  },
+                type : 'POST',
+                url : '/delete'
+                })
+                .done(function(data) {
+                    console.log(data.output);
+                    $('#insertOutput').append('<font color="red">'+data.output+'</font>').show();  
+                    document.getElementById("divUser").innerHTML = "";
+                    document.getElementById("divPass").innerHTML = "";
+                });
+                event.preventDefault();
+              });
+            });
+
+            // $('form#atualizar').ready(function() {
+            //   $('#atualizar').on('submit', function(event) {
+            //     $.ajax({
+            //       data : {
+            //         ElkIP : $('#ElkIP').val(),
+            //         id_user : $('#id_user').val(),
+            //         nome_user : $('#nome_user').val(),
+            //         sobrenome_user: $('#sobrenome_user').val(),
+            //       },
+            //     type : 'POST',
+            //     url : '/update'
+            //     })
+            //     .done(function(data) {
+            //       document.getElementById("insertOutput").innerHTML = "";
+            //       document.getElementById("searchOutput").innerHTML = "";
+            //       document.getElementById("deleteOutput").innerHTML = "";
+            //       $('#searchOutput').text(data.output).show();
+            //     });
+            //     event.preventDefault();
+            //   });
+            // });
+
+            $("#search").click(function() {
+              if($("#searchfirstName").val()== null || $("#searchlastName").val() ==""){
+                alert('<< INFORME NOME E SOBRENOME >>');
+                return false;
+              }
+            });
+            $("#send").click(function() {
+              if($("#firstName").val()== null || $("#lastName").val() ==""){
+                alert('<< INFORME NOME E SOBRENOME >>');
+                return false;
+              }
             });
             $("#sendLogin").click(function() {
             if($("#usuario").val() == "" || $("#senha").val() ==""){
@@ -286,6 +383,8 @@
             }
             });
         </script>
+
+
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

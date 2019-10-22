@@ -55,6 +55,30 @@ def elastic_search(nome,sobrenome,ElkIP):
 		result_list.append("ID: %s | Nome: %s e Sobrenome: %s" % (hit["_id"], hit["_source"]["nome"],hit["_source"]["sobrenome"]))
 	return result_list
 
+def elastic_update(id,nome,sobrenome,ElkIP):
+	es = Elasticsearch([ElkIP])
+	#es = Elasticsearch(['10.0.1.69'])
+
+	doc = {
+	    'nome': nome ,
+	    'sobrenome': sobrenome,
+	}
+
+	res = es.index(index="usuarios", id=id, body=doc)
+	print(res['result'])
+
+def elastic_delete(id,nome,sobrenome,ElkIP):
+	es = Elasticsearch([ElkIP])
+	#es = Elasticsearch(['10.0.1.69'])
+
+	doc = {
+	    'nome': nome ,
+	    'sobrenome': sobrenome,
+	}
+
+	res = es.delete(index="usuarios", id=id)
+	print(res['result'])
+
 
 #####################################
 
@@ -104,13 +128,34 @@ def login_user():
 	output = search_result
 
 	if len(output) > 0:
-		#return "teste"
+		#return "teste" 
 		#return login()
 		#return login(usuario)
 		return jsonify({'output': output[0] })
 		#return render_template('login.html', name=usuario)
 	else:
 		return jsonify({'output' : 'Usuario nao encontrado!'})
+
+@app.route('/update',methods= ['POST'])
+def update():
+	#print request.form
+	ElkIP = request.form['ElkIP']
+	id_user = request.form['id_user']
+	nome_user = request.form['nome_user']
+	sobrenome_user = request.form['sobrenome_user']
+	elastic_update(id_user,nome_user,sobrenome_user,ElkIP)
+	return jsonify({'output' : 'Valor atualizado!'})
+
+@app.route('/delete',methods= ['POST'])
+def delete():
+	#print "\n\nChamou o DELETE\n\n"
+	#print request.form
+	ElkIP = request.form['ElkIP']
+	id_user = request.form['id_user']
+	nome_user = request.form['nome_user']
+	sobrenome_user = request.form['sobrenome_user']
+	elastic_delete(id_user,nome_user,sobrenome_user,ElkIP)
+	return jsonify({'output' : 'Valor removido!'})
 
 if __name__ == "__main__":
 	app.run("0.0.0.0", "80", debug=True)
